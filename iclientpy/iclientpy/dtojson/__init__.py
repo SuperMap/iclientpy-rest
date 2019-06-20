@@ -182,18 +182,27 @@ class ListParser:
 
 _str_str_typing_dict = typing.Dict[str,str]
 
+def _issubclass(t1, t2):
+    try:
+        return issubclass(t1, t2)
+    except TypeError:
+        #python 3.7
+        return issubclass(t1.__origin__, t2)
+
 def parser(clz: type, field_parser: typing.Dict[typing.Tuple[type, str], typing.Callable] = {},
            type_parser: typing.Dict[type, typing.Callable] = {}):
     if clz in primitive_types:
         return _primitive_parser
-    if issubclass(clz, Enum):
+    if _issubclass(clz, Enum):
         return EnumParser(clz)
     if clz == dict or clz is _str_str_typing_dict:
         return _dict_parser
-    if issubclass(clz, list):
-        if not isinstance(clz, typing.GenericMeta):
-            raise NotImplemented()
-        clzname = clz.__str__(clz)  # type:str
+    if _issubclass(clz, list):
+        try:
+            clzname = clz.__str__(clz)  # type:str
+        except TypeError:
+            #python 3.7
+            clzname = clz.__str__()  # type:str
         start = clzname.find('[')
         end = clzname.rfind(']')
         if start == -1 and end == -1:
