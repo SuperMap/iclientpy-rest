@@ -2,7 +2,6 @@ import types
 from typing import List, Callable
 from enum import Enum
 from io import IOBase, StringIO
-from pandas import DataFrame
 from iclientpy.rest.apifactory import OnlineAPIFactory
 from iclientpy.rest.api.model import DataItemType, PostMyDatasItem, Layer, LayerType, SourceType, PostMapsItem, Point2D, \
     Rectangle2D, PrjCoordSys, Status, OnlineMapShareSetting, OnlineDataShareSetting, MapShareSetting, PermissionType, \
@@ -135,16 +134,16 @@ class Online:
         return data_id
 
     @typeassert
-    def upload_dataframe_as_json(self, data_name: str, df: DataFrame, callback: Callable = None):
+    def upload_json(self, data_name: str, json: str, callback: Callable = None):
         """
-        上传DataFrame为JSON类型数据
+        上传JSON
 
         Args:
             data_name: 上传后数据名称
-            df: DataFrame数据
+            json: json字符串
 
         """
-        with StringIO(df.to_json()) as dff:
+        with StringIO(json) as dff:
             return self.upload_data(data_name, dff, DataItemType.JSON, callback)
 
     @typeassert

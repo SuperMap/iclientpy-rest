@@ -1,5 +1,4 @@
 import math
-import pandas as pd
 from ipyleaflet import Layer
 from ipywidgets import VBox, Layout, ColorPicker, IntRangeSlider
 from traitlets import Unicode, Any, Bool, Tuple, Int, Float, Dict, default, validate, link
@@ -116,14 +115,16 @@ class RankSymbolThemeLayer(Layer):
                        feature["properties"]["cp"][1])
                 tempdata.append(row)
 
-        elif isinstance(proposal['value'], pd.DataFrame):
-            for index, row in proposal['value'].iterrows():
-                feature = get_geojson_data(geojson=self._privinces_geojson,
-                                           name=proposal['value'][self.address_key][index])
-                trow = (proposal['value'][self.address_key][index], proposal['value'][self.value_key][index],
-                        feature["properties"]["cp"][0],
-                        feature["properties"]["cp"][1])
-                tempdata.append(trow)
+        else:
+            import pandas as pd
+            if isinstance(proposal['value'], pd.DataFrame):
+                for index, row in proposal['value'].iterrows():
+                    feature = get_geojson_data(geojson=self._privinces_geojson,
+                                               name=proposal['value'][self.address_key][index])
+                    trow = (proposal['value'][self.address_key][index], proposal['value'][self.value_key][index],
+                            feature["properties"]["cp"][0],
+                            feature["properties"]["cp"][1])
+                    tempdata.append(trow)
 
         cmin = min(dt[1] for dt in tempdata)
         cminlog10 = math.floor(math.log10(abs(cmin)))

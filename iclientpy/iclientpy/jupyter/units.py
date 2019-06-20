@@ -1,6 +1,5 @@
 import os
 import geojson
-import pandas as pd
 
 
 def load_geojson_data():
@@ -46,6 +45,7 @@ def convert_data_frame_to_dataset(data, lng_key=0, lat_key=1, value_key=2):
         返回dataset类型数据
     """
     result = []
+    import pandas as pd
     if isinstance(data, pd.DataFrame):
         for index, row in data.iterrows():
             point = geojson.Point((data[lng_key][index], data[lat_key][index]))
