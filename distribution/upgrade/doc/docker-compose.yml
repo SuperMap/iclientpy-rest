@@ -1,8 +1,0 @@
-iclientpy:
-    labels:
-        io.rancher.scheduler.affinity:host_label: product=iclientpy
-    image: registry-vpc.cn-beijing.aliyuncs.com/iclientpy/iclientpy-supermap-io
-    container_name: iclientpy-doc
-    restart: always
-    ports:
-     - 80:80

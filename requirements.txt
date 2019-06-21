@@ -5,14 +5,8 @@ httpretty==0.8.14
 typing==3.6.2
 geojson==2.3.0
 setuptools==36.5.0
-ipyleaflet
-ipykernel
-notebook
 traitlets==4.3.2
-ipywidgets
 pytest==3.2.1
-progressbar2==3.34.3
 PyInstaller==3.3.1
 requests-mock==1.4.0
 jsonschema==3.0.1
-widgetsnbextension
