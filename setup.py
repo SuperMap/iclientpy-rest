@@ -21,7 +21,7 @@ with open('requirements.txt') as f:
     required = f.read().splitlines()
 
 setup_args = {
-    'name': 'iclientpy.rest',
+    'name': 'iclientpy_rest',
     'version': version_ns['__version__'],
     'description': 'iclientpy rest',
     'long_description': LONG_DESCRIPTION,
