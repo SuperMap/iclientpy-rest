@@ -52,7 +52,7 @@ def to_dict_or_list(obj):
     return result
 
 
-def to_json_str(obj):
+def to_json_str(obj, **kwargs):
     """
     将json对象转为json字符串
 
@@ -65,12 +65,11 @@ def to_json_str(obj):
     if hasattr(obj, '_repr_html_'):
         _repr_html_ = getattr(obj, '_repr_html_')
         delattr(obj, '_repr_html_')
-        result =  obj.name if isinstance(obj, Enum) else json.dumps(to_dict_or_list(obj))
+        result =  obj.name if isinstance(obj, Enum) else json.dumps(to_dict_or_list(obj), **kwargs)
         setattr(obj, '_repr_html_', _repr_html_)
         return result
     else:
-        return obj.name if isinstance(obj, Enum) else json.dumps(to_dict_or_list(obj))
-
+        return obj.name if isinstance(obj, Enum) else json.dumps(to_dict_or_list(obj), **kwargs)
 
 
 def import_root_module_to_local(kls, local_dict = None):

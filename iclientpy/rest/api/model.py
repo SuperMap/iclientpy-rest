@@ -47,7 +47,14 @@ def default_init(cls: type):
         for field_name, field_type in fileds.items():
             setattr(self, field_name, None)
 
+    from iclientpy.dtojson import to_json_str
+
+    def to_string(self):
+        return to_json_str(self, indent=2, sort_keys=True)
+
     cls.__init__ = init_method
+    cls.__str__ = to_string
+    cls.__repr__= to_string
     return cls
 
 
