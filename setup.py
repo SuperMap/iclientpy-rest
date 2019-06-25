@@ -14,7 +14,7 @@ LONG_DESCRIPTION = 'SuperMap iclient Python REST API'
 
 
 version_ns = {}
-with open(os.path.join(here, 'iclientpy', 'rest' '_version.py')) as f:
+with open(os.path.join(here, 'iclientpy', 'rest', '_version.py')) as f:
     exec(f.read(), {}, version_ns)
 
 with open('requirements.txt') as f:
