@@ -7,12 +7,12 @@
 官网：http://iclientpy.supermap.io/
 
 ### Samples
-
-![sample](./iclientpy/doc/source/_static/sample.png)
+```python
+from iclientpy import rest
+server = rest.Server(base_url="http://support.supermap.com.cn:8090/iserver")
+portal = rest.Portal(base_url="http://iptl.supermap.io/")
+```
 
 ### 许可
 
 [ Apache License 2.0 ](./LICENSE)
-
-
-
