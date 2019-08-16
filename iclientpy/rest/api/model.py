@@ -2369,6 +2369,7 @@ class DataItemType(Enum):
     UNKNOWN = 'UNKNOWN'
     WORKENVIRONMENT = 'WORKENVIRONMENT'
     WORKSPACE = 'WORKSPACE'
+    GEOJSON = 'GEOJSON'
 
 
 class ServiceStatus(Enum):
