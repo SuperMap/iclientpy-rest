@@ -348,9 +348,9 @@ class APIFactory:
         self._base_url = base_url if not base_url.endswith('/') else base_url[:-1]
         self._services_url = self._base_url + '/services'
         self._proxies = proxies if proxies is not None else _get_proxy_from_arguments()
-        auth = create_auth(self._base_url + '/services/security/login.json', username, passwd, token,
+        self._auth = create_auth(self._base_url + '/services/security/login.json', username, passwd, token,
                            proxies=self._proxies)
-        self._handler = RestInvocationHandlerImpl(self._base_url, auth, proxies=self._proxies)
+        self._handler = RestInvocationHandlerImpl(self._base_url, self._auth, proxies=self._proxies)
 
     def management(self) -> Management:
         """
@@ -380,7 +380,7 @@ class APIFactory:
         Returns:
             返回iServer指定服务的api
         """
-        handler = RestInvocationHandlerImpl(self._services_url + '/' + service_name, proxies=self._proxies)
+        handler = RestInvocationHandlerImpl(self._services_url + '/' + service_name, self._auth, proxies=self._proxies)
         return create(DataService, handler)
 
     def map_service(self, service_name: str) -> MapService:
@@ -394,7 +394,7 @@ class APIFactory:
             返回iServer指定服务的api
         """
         return create(MapService,
-                      RestInvocationHandlerImpl(self._services_url + '/' + service_name, proxies=self._proxies))
+                      RestInvocationHandlerImpl(self._services_url + '/' + service_name, self._auth, proxies=self._proxies))
 
     def security_service(self) -> SecurityService:
         """
@@ -403,7 +403,7 @@ class APIFactory:
         Returns:
             返回iServer安全相关的api
         """
-        return create(SecurityService, RestInvocationHandlerImpl(self._services_url, proxies=self._proxies))
+        return create(SecurityService, RestInvocationHandlerImpl(self._services_url, self._auth, proxies=self._proxies))
 
     def distributedanalyst_service(self, service_name: str = 'distributedanalyst/rest',
                                    version: str = 'v1') -> DistributedAnalyst:
@@ -418,7 +418,7 @@ class APIFactory:
             返回iServer分布式分析相关api
         """
         return create(DistributedAnalyst,
-                      RestInvocationHandlerImpl(self._services_url + '/' + service_name + '/' + version + '/jobs',
+                      RestInvocationHandlerImpl(self._services_url + '/' + service_name + '/' + version + '/jobs', self._auth,
                                                 proxies=self._proxies))
 
     def datacatalog_service(self, service_name: str = 'datacatalog/rest') -> Datacatalog:
@@ -432,11 +432,11 @@ class APIFactory:
             返回iServer数据目录服务api
         """
         return create(Datacatalog,
-                      RestInvocationHandlerImpl(self._services_url + '/' + service_name, proxies=self._proxies))
+                      RestInvocationHandlerImpl(self._services_url + '/' + service_name, self._auth, proxies=self._proxies))
 
     def servicespage(self):
         return create(ServicesPage,
-                      RestInvocationHandlerImpl(self._base_url, proxies=self._proxies))
+                      RestInvocationHandlerImpl(self._base_url, self._auth, proxies=self._proxies))
 
 
 class iPortalAPIFactory:
