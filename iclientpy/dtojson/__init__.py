@@ -39,6 +39,8 @@ def to_dict_or_list(obj):
         for key, value in tmp_dict.items():
             result[key] = None if value is None else to_dict_or_list(value)
         return result
+    if not hasattr(obj, '__dict__'):
+        return obj.__str__
     annos = _get_all_annotations(clz)  # type:dict
     result = vars(obj).copy()  # type:dict
     for key in annos.keys():
@@ -134,8 +136,13 @@ class ObjectParser:
         if json_obj is None:
             return None
         result = self._clz()
+        remain_keys = list(json_obj.keys());
         for field_name, deserializer in self._parsers.items():
             setattr(result, field_name, deserializer(json_obj.get(field_name, None), json_obj))
+            if field_name in remain_keys :
+                remain_keys.remove(field_name)
+        for field_name in remain_keys:
+            setattr(result, field_name, json_obj.get(field_name));
         return result
 
 

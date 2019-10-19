@@ -227,7 +227,8 @@ class RestInvocationHandlerImpl(RestInvocationHandler):
         url = self._base_url + uri + '.json' if rest.get_splice_url() else uri + '.json'
         params = self._get_query_params(kwargs, rest.get_queryKWs())
         params.update(rest.get_fixed_queryKWs())
-        return self._send_request(rest, url, params=params, proxies=self._proxies, auth=self._auth)
+        data = to_json_str(kwargs[rest.get_entityKW()]) if rest.get_entityKW() is not None else {}
+        return self._send_request(rest, url, data=data, params=params, proxies=self._proxies, auth=self._auth)
 
     def head(self, rest, uri, args, kwargs):
         """

@@ -5,7 +5,7 @@ from .model import PostWorkspaceParameter, GetWorkspaceResultItem, PostWorkspace
     PostTilesetUpdateJobs, PostTilesetUpdateJobsResultItem, GetTilesetExportJobResultItem, MngServiceInfo, \
     GetFileUploadResult, PostFileUploadTasksParam, PostUploadTasksResult, PostFileUploadTaskResult, \
     GetFileUploadTaskResult, RestMngFileListItem, DataStoreSetting, RestMngTileStorageInfo, UserEntity, UserInfo, \
-    RoleEntity, ServiceInstance, PostAuthorizeEntity
+    RoleEntity, ServiceInstance, PostAuthorizeEntity, ProviderSetting, ComponentSetting
 from .abstracttypefields import mng_service_info_deserializer
 from io import FileIO
 
@@ -158,4 +158,28 @@ class Management:
 
     @post('/manager/instances/authorize', entityKW='entity')
     def post_authorize(self, entity: PostAuthorizeEntity) -> MethodResult:
+        pass
+
+    @get('/manager/providers')
+    def get_providers(self) -> List[dict]:
+        pass
+
+    @post('/manager/providers', entityKW='entity')
+    def post_providers(self, entity: ProviderSetting) -> MethodResult:
+        pass
+
+    @put('/manager/providers', entityKW='names')
+    def put_providers(self, names: List[str]) -> MethodResult:
+        pass
+
+    @get('/manager/components')
+    def get_components(self) -> List[dict]:
+        pass
+
+    @post('/manager/components', entityKW='entity')
+    def post_components(self, entity: ComponentSetting) -> MethodResult:
+        pass
+
+    @put('/manager/components', entityKW='names')
+    def put_components(self, names: List[str]) -> MethodResult:
         pass
